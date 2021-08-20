@@ -1,0 +1,80 @@
+render() {
+    var {
+      recieverId,
+      userId,
+      bookName,
+      reasonToRequesting,
+      recieverName,
+      recieverContact,
+      recieverAddress
+    } = this.state;
+
+    var bookInfoList = [
+      { type: "Name", value: recieverName },
+      { type: "Contact", value: recieverContact }
+    ];
+
+    var recieverInfoList = [
+      { type: "Name", value: bookName },
+      { type: "Reason", value: reasonToRequesting }
+    ];
+
+    return (
+      <View style={styles.container}>
+        {/* Before writing MyHeader code pass props in MyHeader */}
+        <MyHeader
+          navigation={this.props.navigation}
+          title={"Donate Books"}
+          leftComponent={
+            <Icon
+              name={"arrow-left"}
+              type={"feather"}
+              color={"#696969"}
+              onPress={() => this.props.navigation.goBack()}
+            />
+          }
+        />
+        <View style={styles.upperContainer}>
+          <Card title={"Book Information"} titleStyle={styles.cardTitle}>
+            {bookInfoList.map((item, index) => (
+              <Card key={`book-card-${index}`}>
+                <Text
+                  key={`book-card-value-${index}`}
+                  style={{ fontWeight: "bold" }}
+                >
+                  {item.type}: {item.value}
+                </Text>
+              </Card>
+            ))}
+          </Card>
+        </View>
+        <View style={styles.middleContainer}>
+          <Card title={"Reciever Information"} titleStyle={styles.cardTitle}>
+            {recieverInfoList.map((item, index) => (
+              <Card key={`receiver-card-${index}`}>
+                <Text
+                  key={`receiver-card-value-${index}`}
+                  style={{ fontWeight: "bold" }}
+                >
+                  {item.type}: {item.value}
+                </Text>
+              </Card>
+            ))}
+          </Card>
+        </View>
+        <View style={styles.lowerContainer}>
+          {recieverId !== userId ? (
+            <CustomButton
+              title={"I want to Donate"}
+              style={styles.button}
+              onPress={() => {
+                this.updateBookStatus();
+              }}
+              titleStyle={styles.buttonText}
+            />
+          ) : null}
+        </View>
+      </View>
+    );
+  }
+}
